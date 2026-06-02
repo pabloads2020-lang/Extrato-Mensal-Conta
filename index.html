@@ -400,10 +400,16 @@
             Limpar
         </button>
     </div>
-    <button class="btn btn-export" id="btnExportar">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Salvar como imagem (PNG)
-    </button>
+    <div style="display:flex;gap:10px;margin-top:10px;">
+        <button class="btn btn-export" id="btnCopiar" style="flex:1;margin-top:0;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar
+        </button>
+        <button class="btn btn-export" id="btnExportar" style="flex:1;margin-top:0;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Salvar PNG
+        </button>
+    </div>
 
     <button class="theme-toggle" id="btnTheme" onclick="toggleCardTheme()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -583,21 +589,59 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
         processarDados();
     }
 
-    async function exportarImagem() {
+    async function gerarCanvas() {
         processarDados();
         await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-
-        if (window._html2canvasFailed || typeof html2canvas === 'undefined') {
-            alert('Biblioteca de exportação indisponível.\nAlternativa: use Ctrl+P → Salvar como PDF.');
-            return;
-        }
+        if (window._html2canvasFailed || typeof html2canvas === 'undefined') return null;
         const card = document.getElementById('extratoCard');
+        const bgColor = card.classList.contains('dark-card') ? '#141720' : '#ffffff';
+        return await html2canvas(card, {
+            scale: 2.5, backgroundColor: bgColor, logging: false,
+            useCORS: true, allowTaint: false
+        });
+    }
+
+    async function copiarImagem() {
+        const btn = document.getElementById('btnCopiar');
         try {
-            const bgColor = card.classList.contains('dark-card') ? '#141720' : '#ffffff';
-            const canvas = await html2canvas(card, {
-                scale: 2.5, backgroundColor: bgColor, logging: false,
-                useCORS: true, allowTaint: false
-            });
+            if (!navigator.clipboard || !window.ClipboardItem) {
+                alert('Seu navegador não suporta copiar imagens.\nUse Chrome ou Edge.');
+                return;
+            }
+            btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-5"/></svg> Copiando...';
+            btn.style.color = 'var(--gold)';
+            btn.style.borderColor = 'var(--amber)';
+
+            const canvas = await gerarCanvas();
+            if (!canvas) { alert('Biblioteca de exportação indisponível.'); return; }
+
+            // Compatibilidade Firefox: ClipboardItem aceita Promise<Blob> diretamente
+            const blobPromise = new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+            try {
+                await navigator.clipboard.write([
+                    new ClipboardItem({ 'image/png': blobPromise })
+                ]);
+                btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copiado!';
+                setTimeout(() => {
+                    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar';
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }, 2000);
+            } catch (e) {
+                alert('Erro ao copiar: ' + e.message + '\nTente usar "Salvar PNG" e envie o arquivo.');
+            }
+        } catch (err) {
+            btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+            alert('Erro: ' + err);
+        }
+    }
+
+    async function exportarImagem() {
+        try {
+            const canvas = await gerarCanvas();
+            if (!canvas) { alert('Biblioteca de exportação indisponível.\nAlternativa: use Ctrl+P → Salvar como PDF.'); return; }
             const mes = document.getElementById('mesInput').value.trim() || 'extrato';
             const link = document.createElement('a');
             link.download = `extrato_${mes.toLowerCase().replace(/\s+/g, '_')}.png`;
@@ -621,6 +665,7 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
         lbl.textContent = cardDark ? 'Extrato claro' : 'Extrato escuro';
     }
 
+    document.getElementById('btnCopiar').addEventListener('click', copiarImagem);
     document.getElementById('btnProcessar').addEventListener('click', processarDados);
     document.getElementById('btnLimpar').addEventListener('click', limparCampo);
     document.getElementById('btnExportar').addEventListener('click', exportarImagem);
