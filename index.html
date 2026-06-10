@@ -2,10 +2,11 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Extrato · Pleno Gestão</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" rel="stylesheet">
     <script>
       (function() {
         var s = document.createElement('script');
@@ -37,12 +38,184 @@
             background: var(--bg);
             font-family: 'DM Sans', sans-serif;
             min-height: 100vh;
+            padding: 0;
+        }
+
+        /* ==================== TOPBAR PADRÃO HUB FINANCEIRO ==================== */
+        .hub-topbar {
+            --bg-topbar: #141720;
+            --border-topbar: #2a2e3f;
+            --text-topbar: #e1e3ef;
+            --text2-topbar: #9a9eb8;
+            --text3-topbar: #5c6080;
+            --gold-topbar: #f5c842;
+            --amber-topbar: #e0ac2c;
+            font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-topbar);
+            border-bottom: 1px solid var(--border-topbar);
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        body.light .hub-topbar {
+            --bg-topbar: #ffffff;
+            --border-topbar: #d4d8e2;
+            --text-topbar: #1a1d2e;
+            --text2-topbar: #4a4f6a;
+            --text3-topbar: #8a90a8;
+            --gold-topbar: #b8860b;
+            --amber-topbar: #c47d00;
+        }
+        .hub-topbar-left, .hub-topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .hub-topbar-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .hub-pbf-badge {
+            background: var(--gold-topbar);
+            padding: 0 12px;
+            height: 30px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: #000;
+            letter-spacing: 0.5px;
+        }
+        .hub-topbar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-topbar);
+            white-space: nowrap;
+        }
+        .hub-back-btn, .hub-newtab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: transparent;
+            border: 1px solid var(--border-topbar);
+            border-radius: 8px;
+            color: var(--text2-topbar);
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .hub-back-btn:hover, .hub-newtab-btn:hover {
+            border-color: var(--amber-topbar);
+            color: var(--gold-topbar);
+            background: var(--bg-topbar);
+        }
+        .hub-back-btn .material-symbols-outlined,
+        .hub-newtab-btn .material-symbols-outlined {
+            font-size: 16px;
+        }
+        .hub-active-tool {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gold-topbar);
+            white-space: nowrap;
+            background: transparent;
+        }
+        .hub-clock {
+            font-size: 11px;
+            color: var(--text3-topbar);
+            font-variant-numeric: tabular-nums;
+            background: var(--bg-topbar);
+            padding: 4px 10px;
+            border-radius: 30px;
+            border: 1px solid var(--border-topbar);
+        }
+        .hub-theme-btn {
+            background: var(--bg-topbar);
+            border: 1px solid var(--border-topbar);
+            border-radius: 30px;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            transition: border-color 0.2s;
+            flex-shrink: 0;
+        }
+        .hub-theme-btn:hover {
+            border-color: var(--gold-topbar);
+        }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 20px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @media (max-width: 600px) {
+            .hub-back-btn span:not(.material-symbols-outlined),
+            .hub-newtab-btn span:not(.material-symbols-outlined) {
+                display: none;
+            }
+            .hub-back-btn, .hub-newtab-btn {
+                padding: 5px 8px;
+            }
+            .hub-active-tool {
+                font-size: 13px;
+                max-width: 140px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .hub-clock {
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hub-topbar-title {
+                display: none;
+            }
+            .hub-topbar-center {
+                position: static;
+                transform: none;
+                margin: 0 auto;
+            }
+        }
+        /* ==================== FIM TOPBAR ==================== */
+
+        /* Main container com padding para não colar na topbar */
+        .main-wrapper {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             gap: 32px;
             padding: 36px 24px;
             flex-wrap: wrap;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
         /* ── PAINEL DE ENTRADA ── */
@@ -195,7 +368,7 @@
         .extrato-card.dark-card .footer-note       { border-color: #2a2e3f; }
         .extrato-card.dark-card .footer-note span  { color: #5c6080; }
 
-        /* Toggle button */
+        /* Toggle button (apenas para o tema do extrato) */
         .theme-toggle {
             display: flex;
             align-items: center;
@@ -374,103 +547,180 @@
 </head>
 <body>
 
-<!-- PAINEL -->
-<div class="panel">
-    <div class="panel-header">
-        <div class="panel-badge">PBF</div>
-        <div class="panel-title">Importar Extrato</div>
-    </div>
-
-    <div class="form-group">
-        <label>Mês de referência</label>
-        <input type="text" id="mesInput" value="MAIO 2026">
-    </div>
-    <div class="form-group">
-        <label>Dados copiados do Excel</label>
-        <textarea id="rawData" placeholder="Exemplo:&#10;ENTRADA TOTAL	R$ 135.059,37&#10;SAÍDA TOTAL	R$ 57.436,15&#10;ENTRADA DIVIDENDOS	R$ 505,34&#10;..."></textarea>
-    </div>
-
-    <div class="btn-group">
-        <button class="btn btn-primary" id="btnProcessar">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-            Atualizar
-        </button>
-        <button class="btn btn-ghost" id="btnLimpar">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-            Limpar
+<!-- ==================== TOPBAR PADRÃO HUB FINANCEIRO ==================== -->
+<div class="hub-topbar">
+    <div class="hub-topbar-left">
+        <div class="hub-pbf-badge">PBF</div>
+        <span class="hub-topbar-title">Hub Financeiro</span>
+        <button class="hub-back-btn" id="hubBackBtn">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span>Voltar ao início</span>
         </button>
     </div>
-    <div style="display:flex;gap:10px;margin-top:10px;">
-        <button class="btn btn-export" id="btnCopiar" style="flex:1;margin-top:0;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copiar
-        </button>
-        <button class="btn btn-export" id="btnExportar" style="flex:1;margin-top:0;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Salvar PNG
-        </button>
+    <div class="hub-topbar-center">
+        <span id="hubActiveToolName" class="hub-active-tool">Extrato Mensal de Conta</span>
     </div>
-
-    <button class="theme-toggle" id="btnTheme" onclick="toggleCardTheme()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        <span id="themeLabel">Extrato escuro</span>
-        <div class="toggle-track"><div class="toggle-thumb"></div></div>
-    </button>
-
-    <div class="helper">💡 Selecione as células no Excel (descrição + valor), copie e cole aqui.</div>
+    <div class="hub-topbar-right">
+        <button class="hub-newtab-btn" id="hubNewTabBtn">
+            <span class="material-symbols-outlined">open_in_new</span>
+            <span>Nova aba</span>
+        </button>
+        <span class="hub-clock" id="hubClock"></span>
+        <button class="hub-theme-btn" id="hubThemeBtn">🌙</button>
+    </div>
 </div>
+<!-- ==================== FIM TOPBAR ==================== -->
 
-<!-- EXTRATO -->
-<div class="extrato-wrap">
-    <div class="extrato-card" id="extratoCard">
-        <div class="extrato-topbar"></div>
-        <div class="extrato-content">
+<div class="main-wrapper">
+    <!-- PAINEL -->
+    <div class="panel">
+        <div class="panel-header">
+            <div class="panel-badge">PBF</div>
+            <div class="panel-title">Importar Extrato</div>
+        </div>
 
-            <div class="ext-header">
-                <div class="ext-header-left">
-                    <div class="mes" id="mesExibido">MAIO 2026</div>
-                    <div class="subtitulo">Extrato de Movimentações Consolidadas</div>
+        <div class="form-group">
+            <label>Mês de referência</label>
+            <input type="text" id="mesInput" value="MAIO 2026">
+        </div>
+        <div class="form-group">
+            <label>Dados copiados do Excel</label>
+            <textarea id="rawData" placeholder="Exemplo:&#10;ENTRADA TOTAL	R$ 135.059,37&#10;SAÍDA TOTAL	R$ 57.436,15&#10;ENTRADA DIVIDENDOS	R$ 505,34&#10;..."></textarea>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" id="btnProcessar">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                Atualizar
+            </button>
+            <button class="btn btn-ghost" id="btnLimpar">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                Limpar
+            </button>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:10px;">
+            <button class="btn btn-export" id="btnCopiar" style="flex:1;margin-top:0;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copiar
+            </button>
+            <button class="btn btn-export" id="btnExportar" style="flex:1;margin-top:0;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Salvar PNG
+            </button>
+        </div>
+
+        <!-- Botão para alternar tema do extrato (modo escuro/claro do card) -->
+        <button class="theme-toggle" id="btnTheme">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <span id="themeLabel">Extrato escuro</span>
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        </button>
+
+        <div class="helper">💡 Selecione as células no Excel (descrição + valor), copie e cole aqui.</div>
+    </div>
+
+    <!-- EXTRATO -->
+    <div class="extrato-wrap">
+        <div class="extrato-card" id="extratoCard">
+            <div class="extrato-topbar"></div>
+            <div class="extrato-content">
+
+                <div class="ext-header">
+                    <div class="ext-header-left">
+                        <div class="mes" id="mesExibido">MAIO 2026</div>
+                        <div class="subtitulo">Extrato de Movimentações Consolidadas</div>
+                    </div>
+                    <div class="ext-header-right">
+                        <div class="ext-brand">Pleno Gestão</div>
+                        <div class="ext-brand-sub">Relatório Confidencial</div>
+                    </div>
                 </div>
-                <div class="ext-header-right">
-                    <div class="ext-brand">Pleno Gestão</div>
-                    <div class="ext-brand-sub">Relatório Confidencial</div>
+
+                <div class="totais-row">
+                    <div class="total-card in">
+                        <div class="tc-label">Entrada Total</div>
+                        <div class="tc-valor" id="totalEntrada">R$ 0,00</div>
+                    </div>
+                    <div class="total-card out">
+                        <div class="tc-label">Saída Total</div>
+                        <div class="tc-valor" id="totalSaida">R$ 0,00</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="totais-row">
-                <div class="total-card in">
-                    <div class="tc-label">Entrada Total</div>
-                    <div class="tc-valor" id="totalEntrada">R$ 0,00</div>
+                <hr class="sep">
+
+                <div class="secao-title">
+                    <span class="secao-dot green"></span>
+                    Fluxo de Entradas
                 </div>
-                <div class="total-card out">
-                    <div class="tc-label">Saída Total</div>
-                    <div class="tc-valor" id="totalSaida">R$ 0,00</div>
+                <table class="tabela-fluxo" id="tabelaEntradas"><tbody></tbody></table>
+
+                <div class="secao-title">
+                    <span class="secao-dot red"></span>
+                    Fluxo de Saídas
                 </div>
+                <table class="tabela-fluxo" id="tabelaSaidas"><tbody></tbody></table>
+
+                <div class="footer-note">
+                    <span>Pleno Gestão de Investimentos · Uso exclusivo do cliente</span>
+                </div>
+
             </div>
-
-            <hr class="sep">
-
-            <div class="secao-title">
-                <span class="secao-dot green"></span>
-                Fluxo de Entradas
-            </div>
-            <table class="tabela-fluxo" id="tabelaEntradas"><tbody></tbody></table>
-
-            <div class="secao-title">
-                <span class="secao-dot red"></span>
-                Fluxo de Saídas
-            </div>
-            <table class="tabela-fluxo" id="tabelaSaidas"><tbody></tbody></table>
-
-            <div class="footer-note">
-                <span>Pleno Gestão de Investimentos · Uso exclusivo do cliente</span>
-            </div>
-
         </div>
     </div>
 </div>
 
 <script>
+    // ==================== TOPBAR FUNCTIONS ====================
+    document.getElementById('hubBackBtn')?.addEventListener('click', () => {
+        if (window.self !== window.top) {
+            window.parent.postMessage({ action: 'hubNavigate', target: 'home' }, '*');
+        } else {
+            window.location.href = "https://pabloads2020-lang.github.io/Dashboard-Ferramentas-Integradas/";
+        }
+    });
+    document.getElementById('hubNewTabBtn')?.addEventListener('click', () => {
+        window.open(window.location.href, '_blank');
+    });
+
+    function updateHubClock() {
+        const clockEl = document.getElementById('hubClock');
+        if(!clockEl) return;
+        const now = new Date();
+        const formatted = now.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' }) + ' · ' + now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        clockEl.textContent = formatted;
+    }
+    updateHubClock();
+    setInterval(updateHubClock, 1000);
+
+    // Tema global (body.light) integrado com o botão da topbar
+    function initGlobalTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        const btnTheme = document.getElementById('hubThemeBtn');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light');
+            if(btnTheme) btnTheme.textContent = '☀️';
+        } else {
+            document.body.classList.remove('light');
+            if(btnTheme) btnTheme.textContent = '🌙';
+        }
+        if(btnTheme) {
+            btnTheme.addEventListener('click', () => {
+                if (document.body.classList.contains('light')) {
+                    document.body.classList.remove('light');
+                    localStorage.setItem('theme', 'dark');
+                    btnTheme.textContent = '🌙';
+                } else {
+                    document.body.classList.add('light');
+                    localStorage.setItem('theme', 'light');
+                    btnTheme.textContent = '☀️';
+                }
+            });
+        }
+    }
+    initGlobalTheme();
+
+    // ==================== LÓGICA DO EXTRATO (original) ====================
     const dadosExemplo = `ENTRADA TOTAL\tR$ 135.059,37
 SAÍDA TOTAL\tR$ 57.436,15
 ENTRADA DIVIDENDOS\tR$ 505,34
@@ -524,7 +774,6 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
             linha = linha.trim();
             if (!linha) continue;
 
-            // Parser robusto: tab primeiro, depois padrão valor monetário no final
             let partes = linha.split(/\t/);
             if (partes.length < 2) {
                 const match = linha.match(/^(.+?)\s{2,}(R?\$?\s*-?[\d.,]+)\s*$/);
@@ -540,7 +789,6 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
             if (descUp.includes("ENTRADA TOTAL")) { entradaTotalVal = Math.abs(valorNum); continue; }
             if (descUp.includes("SAÍDA TOTAL") || descUp.includes("SAIDA TOTAL")) { saidaTotalVal = Math.abs(valorNum); continue; }
 
-            // Formatar descrição preservando capitalização original das siglas
             let descFormatada = descricao;
             if (descUp.startsWith("ENTRADA ")) descFormatada = "Entrada " + descricao.substring(8);
             else if (descUp.startsWith("SAÍDA ") || descUp.startsWith("SAIDA ")) descFormatada = "Saída " + descricao.substring(descUp.startsWith("SAÍDA ") ? 6 : 6);
@@ -553,7 +801,6 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
             else entradasDetalhes.push({ descricao: descFormatada, valor: Math.abs(valorNum) });
         }
 
-        // Calcular totais se não fornecidos
         if (entradaTotalVal === 0 && entradasDetalhes.length)
             entradaTotalVal = entradasDetalhes.reduce((s, i) => s + i.valor, 0);
         if (saidaTotalVal === 0 && saidasDetalhes.length)
@@ -615,7 +862,6 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
             const canvas = await gerarCanvas();
             if (!canvas) { alert('Biblioteca de exportação indisponível.'); return; }
 
-            // Compatibilidade Firefox: ClipboardItem aceita Promise<Blob> diretamente
             const blobPromise = new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
             try {
                 await navigator.clipboard.write([
@@ -652,8 +898,8 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
         }
     }
 
+    // Toggle para o tema do extrato (dark-card)
     let cardDark = false;
-
     function toggleCardTheme() {
         cardDark = !cardDark;
         const card = document.getElementById('extratoCard');
@@ -669,6 +915,7 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
     document.getElementById('btnProcessar').addEventListener('click', processarDados);
     document.getElementById('btnLimpar').addEventListener('click', limparCampo);
     document.getElementById('btnExportar').addEventListener('click', exportarImagem);
+    document.getElementById('btnTheme').addEventListener('click', toggleCardTheme);
 
     window.addEventListener('DOMContentLoaded', processarDados);
 </script>
