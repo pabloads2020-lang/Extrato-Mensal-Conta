@@ -31,6 +31,22 @@
             --red:      #f87171;
             --red-bg:   #1a0505;
         }
+        body.light {
+            --bg:       #f0f2f8;
+            --bg2:      #ffffff;
+            --bg3:      #eaecf5;
+            --border:   #d4d8e8;
+            --gold:     #9a7530;
+            --amber:    #b8920a;
+            --text:     #1a1e2b;
+            --text2:    #4a5068;
+            --text3:    #8890a8;
+            --green:    #16a34a;
+            --green-bg: #dcfce7;
+            --red:      #dc2626;
+            --red-bg:   #fee2e2;
+        }
+        body { transition: background .2s, color .2s; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -899,7 +915,7 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
     }
 
     // Toggle para o tema do extrato (dark-card)
-    let cardDark = false;
+    let cardDark = true;
     function toggleCardTheme() {
         cardDark = !cardDark;
         const card = document.getElementById('extratoCard');
@@ -915,6 +931,15 @@ SAÍDA PGTO RESGATE\tR$ 996,76`;
     document.getElementById('btnProcessar').addEventListener('click', processarDados);
     document.getElementById('btnLimpar').addEventListener('click', limparCampo);
     document.getElementById('btnExportar').addEventListener('click', exportarImagem);
+    // Inicia no modo escuro
+    (function() {
+        const card = document.querySelector('.extrato-card');
+        const btn  = document.getElementById('btnTheme');
+        const lbl  = document.getElementById('themeLabel');
+        if (card) card.classList.add('dark-card');
+        if (btn)  btn.classList.add('active');
+        if (lbl)  lbl.textContent = 'Extrato claro';
+    })();
     document.getElementById('btnTheme').addEventListener('click', toggleCardTheme);
 
     window.addEventListener('DOMContentLoaded', processarDados);
